@@ -21,6 +21,7 @@ class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
   File? file;
   double? lat, lng;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -90,6 +91,11 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก Name';
+              } else {}
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Style(),
               labelText: 'Name',
@@ -120,6 +126,11 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก Address';
+              } else {}
+            },
             maxLines: 4,
             decoration: InputDecoration(
               hintText: 'Address :',
@@ -153,7 +164,12 @@ class _CreateAccountState extends State<CreateAccount> {
         Container(
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
-          child: TextFormField(
+          child: TextFormField(keyboardType: TextInputType.phone,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก Phone';
+              } else {}
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Style(),
               labelText: 'Phone',
@@ -184,6 +200,11 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก User';
+              } else {}
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Style(),
               labelText: 'User',
@@ -214,6 +235,11 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก Password';
+              } else {}
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Style(),
               labelText: 'Password',
@@ -241,35 +267,58 @@ class _CreateAccountState extends State<CreateAccount> {
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          buildCreateNewAccount()
+        ],
         title: Text('Create New Account'),
         backgroundColor: MyConstant.primary,
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         behavior: HitTestBehavior.opaque,
-        child: ListView(
-          padding: EdgeInsets.all(16),
-          children: [
-            buildTitle('ข้อมูลทั่วไป'),
-            buildName(size),
-            buildTitle('ชนิดของ User :'),
-            buildRadioBuyer(size),
-            buildRadioSeller(size),
-            buildRadioRider(size),
-            buildTitle('ข้อมูลทั่วไป'),
-            buildAddress(size),
-            buildPhone(size),
-            buildUser(size),
-            buildPassword(size),
-            buildTitle('รูปภาพ'),
-            buildSubTitle(),
-            buildAvatar(size),
-            buildTitle('แสดงพิกัด'),
-            buildMap(),
-          ],
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildTitle('ข้อมูลทั่วไป'),
+                buildName(size),
+                buildTitle('ชนิดของ User :'),
+                buildRadioBuyer(size),
+                buildRadioSeller(size),
+                buildRadioRider(size),
+                buildTitle('ข้อมูลทั่วไป'),
+                buildAddress(size),
+                buildPhone(size),
+                buildUser(size),
+                buildPassword(size),
+                buildTitle('รูปภาพ'),
+                buildSubTitle(),
+                buildAvatar(size),
+                buildTitle('แสดงพิกัด'),
+                buildMap(),
+              ],
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  IconButton buildCreateNewAccount() {
+    return IconButton(
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              if (typeUser == null) {
+                print('Non Choose Type User');
+                MyDialog().normalDialog(context, 'ยังไม่เลือกชนิด User', 'กรุณาเลือกชนิด User');
+              } else {
+                print('Process Insert to Database');
+              }
+            }
+          },
+          icon: Icon(Icons.cloud_upload),
+        );
   }
 
   Set<Marker> setMarker() => <Marker>[

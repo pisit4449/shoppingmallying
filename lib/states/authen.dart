@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingmall/models/user_model.dart';
 import 'package:shoppingmall/utility/my_constant.dart';
 import 'package:shoppingmall/utility/my_dialog.dart';
@@ -87,7 +88,7 @@ class _AuthenState extends State<Authen> {
   Future<Null> checkAuthen({String? user, String? password}) async {
     String apiCheckAuthen =
         '${MyConstant.domain}/shoppingmallying/getUserWhereUser.php?isAdd=true&user=$user';
-    Dio().get(apiCheckAuthen).then((value) {
+    await Dio().get(apiCheckAuthen).then((value) async {
       print('### value for API ===> $value');
       if (value.toString() == 'null') {
         MyDialog()
@@ -99,6 +100,12 @@ class _AuthenState extends State<Authen> {
             // Success Authen
             String type = model.type;
             print('### Authen Success in Type ===> $type');
+
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            preferences.setString('type', type);
+            preferences.setString('user', model.user);
+
             switch (type) {
               case 'buyer':
                 Navigator.pushNamedAndRemoveUntil(

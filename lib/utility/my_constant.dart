@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
   //Generol
   static String appName = 'Shopping Mall';
-  static String domain = 'https://74fd-171-100-238-138.ngrok.io';
+  static String domain = 'https://d4b6-171-100-238-138.ngrok.io';
 
   //Route
   static String routeAuthen = '/authen';
@@ -11,18 +11,32 @@ class MyConstant {
   static String routeBuyerService = '/buyerService';
   static String routeSellerService = '/sellerService';
   static String routeRiderService = '/riderService';
+  static String routeAddProduct = '/addproduct';
 
   //Image
   static String image1 = 'images/image1.png';
   static String image2 = 'images/image2.png';
   static String image3 = 'images/image3.png';
   static String image4 = 'images/image4.png';
+  static String image5 = 'images/image5.png';
   static String avatar = 'images/avatar.png';
 
   // Color
   static Color primary = Color(0xff548430);
   static Color dark = Color(0xff255700);
   static Color light = Color(0xff83b45d);
+  static Map<int, Color> mapMaterialColor = {
+    50:Color.fromRGBO(255, 37, 87, 0.1),
+    100:Color.fromRGBO(255, 37, 87, 0.2),
+    200:Color.fromRGBO(255, 37, 87, 0.3),
+    300:Color.fromRGBO(255, 37, 87, 0.4),
+    400:Color.fromRGBO(255, 37, 87, 0.5),
+    500:Color.fromRGBO(255, 37, 87, 0.6),
+    600:Color.fromRGBO(255, 37, 87, 0.7),
+    700:Color.fromRGBO(255, 37, 87, 0.8),
+    800:Color.fromRGBO(255, 37, 87, 0.9),
+    900:Color.fromRGBO(255, 37, 87, 1.0),
+  };
 
   //Style
   TextStyle h1Style() =>
@@ -38,6 +52,6 @@ class MyConstant {
 
   // ButtonsStyle
   ButtonStyle myButtonStyle() => ElevatedButton.styleFrom(
-      primary: MyConstant.primary,
+      primary: MyConstant.dark,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)));
 }

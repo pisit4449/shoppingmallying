@@ -7,6 +7,18 @@ import 'package:shoppingmall/widgets/show_image.dart';
 import 'package:shoppingmall/widgets/show_title.dart';
 
 class MyDialog {
+  Future<Null> showProgressDialog(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => WillPopScope(
+        child: Center(child: CircularProgressIndicator(color: Colors.white,)),
+        onWillPop: () async {
+          return false;
+        },
+      ),
+    );
+  }
+
   Future<Null> alertLocationService(
       BuildContext context, String title, String message) async {
     showDialog(
@@ -40,7 +52,8 @@ class MyDialog {
         title: ListTile(
           leading: ShowImage(path: MyConstant.image1),
           title: ShowTitle(title: title, textStyle: MyConstant().h2Style()),
-          subtitle: ShowTitle(title: message, textStyle: MyConstant().h3Style()),
+          subtitle:
+              ShowTitle(title: message, textStyle: MyConstant().h3Style()),
         ),
         children: [
           TextButton(
